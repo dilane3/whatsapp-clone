@@ -1,6 +1,6 @@
 // import { Slot } from "expo-router";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableNativeFeedback, View } from "react-native";
 import HomeScreen from ".";
 import Colors from "../../constants/Colors";
 import CommunityScreen from "./community";
@@ -16,6 +16,18 @@ export default function TabsLayout() {
     <SafeAreaView style={styles.container}>
       <Navbar />
       <TabNavigator />
+
+      <TouchableNativeFeedback
+        background={TouchableNativeFeedback.Ripple("#ddd", false)}
+      >
+        <View style={styles.chatIcon}>
+          <Ionicons 
+            name="chatbubble-ellipses"
+            size={30}
+            color="#fff"
+          />
+        </View>
+      </TouchableNativeFeedback>
     </SafeAreaView>
   );
 }
@@ -59,19 +71,24 @@ const TabNavigator = () => {
 const Navbar = () => {
   return (
     <View style={styles.navbar}>
-      <Text style={styles.logo}>Whatsapp</Text>
+      <Text style={styles.logo}>WhatsApp</Text>
 
       <View style={styles.navbarIcons}>
         <Ionicons
           style={styles.icon}
           name="camera-outline"
-          size={20}
+          size={22}
           color="#f1f1f1"
         />
 
-        <Ionicons style={styles.icon} name="search" size={20} color="#f1f1f1" />
+        <Ionicons style={styles.icon} name="search" size={22} color="#f1f1f1" />
 
-        <MaterialCommunityIcons style={styles.icon} name="dots-vertical" size={20} color="#f1f1f1" />
+        <MaterialCommunityIcons
+          style={styles.icon}
+          name="dots-vertical"
+          size={22}
+          color="#f1f1f1"
+        />
       </View>
     </View>
   );
@@ -94,7 +111,7 @@ const styles = StyleSheet.create({
 
   logo: {
     fontSize: 20,
-    fontFamily: "PoppinsBold",
+    fontFamily: "PoppinsMedium",
     color: "#f1f1f1",
   },
 
@@ -103,6 +120,19 @@ const styles = StyleSheet.create({
   },
 
   icon: {
-    marginLeft: 20
+    marginLeft: 20,
+  },
+
+  chatIcon: {
+    position: "absolute",
+    bottom: 20,
+    right: 20,
+    width: 60,
+    height: 60,
+    borderRadius: 100,
+    backgroundColor: Colors.light.primary,
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 5
   }
 });
