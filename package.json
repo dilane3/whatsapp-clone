@@ -12,9 +12,11 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@dilane3/gx": "^1.1.1",
     "@expo/vector-icons": "^13.0.0",
     "@react-navigation/material-top-tabs": "^6.6.2",
     "@react-navigation/native": "^6.0.2",
+    "@react-navigation/stack": "^6.3.16",
     "expo": "~48.0.5",
     "expo-font": "~11.1.1",
     "expo-linking": "~4.0.1",
@@ -26,6 +28,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.71.3",
+    "react-native-gesture-handler": "^2.9.0",
     "react-native-pager-view": "6.1.2",
     "react-native-safe-area-context": "4.5.0",
     "react-native-screens": "~3.20.0",
