@@ -1,4 +1,4 @@
-import 'react-native-gesture-handler';
+import "react-native-gesture-handler";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import {
   DarkTheme,
@@ -9,12 +9,25 @@ import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Image, Text, useColorScheme, View } from "react-native";
+import {
+  ActivityIndicator,
+  Image,
+  Text,
+  useColorScheme,
+  View,
+} from "react-native";
 import Colors from "../constants/Colors";
 import store from "../gx/store";
 import GXProvider from "@dilane3/gx";
+import { Asset } from "expo-asset";
 
-const images: string[] = [];
+const images: string[] = [
+  require("../assets/images/img3.jpg"),
+  require("../assets/images/img4.jpg"),
+  require("../assets/images/img5.jpg"),
+  require("../assets/images/img6.jpg"),
+  require("../assets/images/img7.jpg"),
+];
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -28,7 +41,7 @@ export const unstable_settings = {
 
 export default function RootLayout() {
   // State
-  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(!false);
 
   // Load fonts
   const [loaded, error] = useFonts({
@@ -46,17 +59,23 @@ export default function RootLayout() {
   }, [error]);
 
   useEffect(() => {
-    preloadImages();
+    // if (!imageLoaded) preloadImages();
   }, []);
 
   const preloadImages = async () => {
-    const promises = images.map((img) => {
-      return Image.prefetch(img);
+    const now = Date.now();
+
+    const imageAssets = images.map((image) => Asset.fromModule(image));
+    const imagePromises = imageAssets.map((imageAsset) => {
+      return imageAsset.downloadAsync();
     });
 
-    await Promise.all(promises);
+    await Promise.all(imagePromises);
+    await new Promise(resolve => setTimeout(() => resolve(true), 2000))
 
     setImageLoaded(true);
+
+    console.log(`Time left: ${Date.now() - now}ms`);
   };
 
   return (
@@ -66,28 +85,28 @@ export default function RootLayout() {
         {!loaded && <SplashScreen />}
         {loaded && imageLoaded && <RootLayoutNav />}
 
-        { 
-          loaded && !imageLoaded && (
-            <View style={{
+        {loaded && !imageLoaded && (
+          <View
+            style={{
               flex: 1,
               backgroundColor: Colors.light.primary,
               justifyContent: "center",
-              alignItems: "center"
-            }}>
-              <Text
-                style={{ 
-                  color: "#fff",
-                  fontSize: 16,
-                  fontFamily: "PoppinsBold"
-                }}
-              >WhatsApp</Text>
-              <ActivityIndicator 
-                size="large"
-                color="#fff"
-              />
-            </View>
-          )
-        }
+              alignItems: "center",
+            }}
+          >
+            <Text
+              style={{
+                color: "#fff",
+                fontSize: 20,
+                fontFamily: "PoppinsBold",
+                marginBottom: 20,
+              }}
+            >
+              WhatsApp
+            </Text>
+            <ActivityIndicator size="large" color="#fff" />
+          </View>
+        )}
 
         <StatusBar style="light" backgroundColor={Colors.light.primary} />
       </>
