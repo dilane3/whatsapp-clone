@@ -1,5 +1,14 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { useAction } from "@dilane3/gx";
+import { useNavigation } from "expo-router";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableNativeFeedback,
+} from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { CommonActions } from '@react-navigation/native';
 
 const cards = [
   {
@@ -28,8 +37,7 @@ const cards = [
   {
     id: 5,
     image: require("../../assets/images/img7.jpg"),
-    title:
-      "Une discussion entre potes fait toujours plaisir.",
+    title: "Une discussion entre potes fait toujours plaisir.",
   },
 ];
 
@@ -42,9 +50,32 @@ type CardImageProps = {
 };
 
 const CardImage = ({ card }: CardImageProps) => {
+  // Actions
+  const selectImage = useAction("image", "selectImage");
+
+  // Navigation
+  const navigation = useNavigation();
+
+  // Some handlers
+  const handleDisplayImage = () => {
+    selectImage(card.image)
+
+    navigation.dispatch(
+      CommonActions.navigate("(post)")
+    )
+  }
+
   return (
     <View style={styles.card}>
-      <Image source={card.image} style={styles.cardImage} />
+      <TouchableNativeFeedback
+        background={TouchableNativeFeedback.Ripple("#f5f5f5", false)}
+        onPress={handleDisplayImage}
+        useForeground={true}
+      >
+        <View>
+          <Image source={card.image} style={styles.cardImage} />
+        </View>
+      </TouchableNativeFeedback>
 
       <Text style={styles.cardTitle}>{card.title}</Text>
     </View>
@@ -66,7 +97,7 @@ const styles = StyleSheet.create({
     width: "100%",
     flex: 1,
     padding: 10,
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
   },
 
   card: {
@@ -79,11 +110,11 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 250,
     borderRadius: 10,
-    marginBottom: 10,
   },
 
   cardTitle: {
     fontFamily: "PoppinsRegular",
     fontSize: 14,
+    marginTop: 10
   },
 });

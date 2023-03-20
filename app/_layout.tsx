@@ -41,7 +41,7 @@ export const unstable_settings = {
 
 export default function RootLayout() {
   // State
-  const [imageLoaded, setImageLoaded] = useState(!false);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   // Load fonts
   const [loaded, error] = useFonts({
@@ -59,7 +59,7 @@ export default function RootLayout() {
   }, [error]);
 
   useEffect(() => {
-    // if (!imageLoaded) preloadImages();
+    if (!imageLoaded) preloadImages();
   }, []);
 
   const preloadImages = async () => {
@@ -122,6 +122,7 @@ function RootLayoutNav() {
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="(chat)" options={{ headerShown: false }} />
+        <Stack.Screen name="(post)" options={{ headerShown: false }} />
       </Stack>
     </>
   );
