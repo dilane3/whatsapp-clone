@@ -2,22 +2,25 @@
   "name": "whatsapp-clone",
   "version": "1.0.0",
   "scripts": {
-    "start": "expo start",
+    "start": "npx expo start",
+    "dev": "npx expo start --dev-client",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "build:dev:android": "eas build --profile development --platform android"
   },
   "jest": {
     "preset": "jest-expo"
   },
   "dependencies": {
-    "@dilane3/gx": "^1.1.1",
+    "@dilane3/gx": "^1.2.5",
     "@expo/vector-icons": "^13.0.0",
     "@react-navigation/material-top-tabs": "^6.6.2",
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/stack": "^6.3.16",
     "expo": "~48.0.5",
+    "expo-dev-client": "~2.1.6",
     "expo-font": "~11.1.1",
     "expo-linking": "~4.0.1",
     "expo-router": "^1.0.0-rc5",

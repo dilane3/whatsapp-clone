@@ -65,17 +65,32 @@ export default function RootLayout() {
   const preloadImages = async () => {
     const now = Date.now();
 
-    const imageAssets = images.map((image) => Asset.fromModule(image));
-    const imagePromises = imageAssets.map((imageAsset) => {
-      return imageAsset.downloadAsync();
-    });
+    try {
+      const imageAssets = images.map((image) => Asset.fromModule(image));
 
-    await Promise.all(imagePromises);
-    await new Promise(resolve => setTimeout(() => resolve(true), 2000))
+      // FastImage.preload(
+      //   imageAssets.map((imageAsset) => ({
+      //     uri: imageAsset.localUri || "",
+      //   }))
+      // );
 
-    setImageLoaded(true);
+      const imagePromises = imageAssets.map((imageAsset) => {
+        return imageAsset.downloadAsync();
+      });
 
-    console.log(`Time left: ${Date.now() - now}ms`);
+      await Promise.all(imagePromises);
+      await new Promise(resolve => setTimeout(() => resolve(true), 2000))
+
+      // images.forEach((image) => {
+      //   Image.prefetch(require(image));
+      // });
+
+      setImageLoaded(true);
+
+      console.log(`Time left: ${Date.now() - now}ms`);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -83,12 +98,17 @@ export default function RootLayout() {
       <>
         {/* Keep the splash screen open until the assets have loaded. In the future, we should just support async font loading with a native version of font-display. */}
         {!loaded && <SplashScreen />}
-        {loaded && imageLoaded && <RootLayoutNav />}
+        {loaded && <RootLayoutNav />}
 
         {loaded && !imageLoaded && (
           <View
             style={{
+              position: "absolute",
               flex: 1,
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
               backgroundColor: Colors.light.primary,
               justifyContent: "center",
               alignItems: "center",

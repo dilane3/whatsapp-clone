@@ -39,6 +39,26 @@ const cards = [
     image: require("../../assets/images/img7.jpg"),
     title: "Une discussion entre potes fait toujours plaisir.",
   },
+  {
+    id: 6,
+    image: require("../../assets/images/img8.jpg"),
+    title: "Une discussion entre potes fait toujours plaisir.",
+  },
+  {
+    id: 7,
+    image: require("../../assets/images/img9.jpg"),
+    title: "Une discussion entre potes fait toujours plaisir.",
+  },
+  {
+    id: 8,
+    image: require("../../assets/images/img10.jpg"),
+    title: "Une discussion entre potes fait toujours plaisir.",
+  },
+  {
+    id: 9,
+    image: require("../../assets/images/img11.jpg"),
+    title: "Une discussion entre potes fait toujours plaisir.",
+  },
 ];
 
 type CardImageProps = {
